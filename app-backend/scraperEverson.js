@@ -24,11 +24,12 @@ const allEvents = async () => {
     };
     events.push(event);
   });
-  events.map((event) => {
-    db.query(`INSERT INTO events 
-	      (title, date, description)
-	      VALUES ('${event.title}', '${event.date}', '${event.description}')`);
-  });
+  return events;
+  // events.map((event) => {
+  //   db.query(`INSERT INTO events
+  //       (title, date, description)
+  //       VALUES ('${event.title}', '${event.date}', '${event.description}')`);
+  // });
 };
 
 // const getEvent = (eventID) => {

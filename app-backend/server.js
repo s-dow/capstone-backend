@@ -5,11 +5,12 @@ const scraper = require("./scraper");
 
 const { db, Event, User, Restaurant } = require("./models/db");
 
-// server.get("/events", async (req, res) => {
-//   // const fnw = await scraper.fnw.allEvents();
-//   // const everson = await scraper.everson.allEvents();
-//   res.send({ events: await Event.findAll() });
-// });
+server.get("/events", async (req, res) => {
+  // const fnw = await scraper.fnw.allEvents();
+  const everson = await scraper.everson.allEvents();
+  // res.send({ events: await Event.findAll() });
+  res.send(everson);
+});
 
 // http://localhost:3001/eventlistings/picnic2021
 // server.get("/eventlistings/:event", (req, res) => {
