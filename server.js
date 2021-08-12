@@ -11,10 +11,7 @@ if (!port) {
 }
 
 server.get("/events", async (req, res) => {
-  // const fnw = await scraper.fnw.allEvents();
-  // const everson = await scraper.everson.allEvents();
-  // // res.send({ events: await Event.findAll() });
-  // res.send(everson);
+  res.send({ events: await Event.findAll() });
 });
 
 // http://localhost:3001/eventlistings/picnic2021

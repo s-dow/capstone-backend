@@ -1,11 +1,12 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const cron = require("node-cron");
 
 const { db } = require("./models/db");
 const allEventsUrl = "https://everson.org/events-list/events-category-events/";
 const oneEventUrl = "https://everson.org/connect/";
 
-const allEvents = async () => {
+cron.schedule("*/5 * * * *", async () => {
   const response = await fetch(`${allEventsUrl}`);
   const body = await response.text();
   const $ = cheerio.load(body);
@@ -24,13 +25,13 @@ const allEvents = async () => {
     };
     events.push(event);
   });
-  return events;
-  // events.map((event) => {
-  //   db.query(`INSERT INTO events
-  //       (title, date, description)
-  //       VALUES ('${event.title}', '${event.date}', '${event.description}')`);
-  // });
-};
+  console.log("RUN");
+  events.map((event) => {
+    db.query(`INSERT INTO events
+        (title, date, description)
+        VALUES ('${event.title}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
+  });
+});
 
 // const getEvent = (eventID) => {
 //   return fetch(`${oneEventUrl}${eventID}`)
@@ -55,7 +56,7 @@ const allEvents = async () => {
 //     });
 // };
 
-module.exports = {
-  allEvents,
-  // getEvent,
-};
+// module.exports = {
+//   allEvents,
+//   // getEvent,
+// };

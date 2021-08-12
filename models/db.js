@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 
-//
 let db;
 
 let dbURL = process.env.DATABASE_URL;
