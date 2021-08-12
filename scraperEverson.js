@@ -25,7 +25,6 @@ cron.schedule("*/5 * * * *", async () => {
     };
     events.push(event);
   });
-  console.log("RUN");
   events.map((event) => {
     db.query(`INSERT INTO events
         (title, date, description)
@@ -52,11 +51,12 @@ cron.schedule("*/5 * * * *", async () => {
 //         };
 //         eventDetails.push(eventDetail);
 //       });
+//       console.log(eventDetails);
 //       return eventDetails;
 //     });
 // };
 
 // module.exports = {
-//   allEvents,
-//   // getEvent,
+//   // allEvents,
+//   getEvent,
 // };

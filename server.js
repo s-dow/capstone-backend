@@ -14,12 +14,12 @@ server.get("/events", async (req, res) => {
   res.send({ events: await Event.findAll() });
 });
 
-// http://localhost:3001/eventlistings/picnic2021
-// server.get("/eventlistings/:event", (req, res) => {
-//   scraper.everson.getEvent(req.params.event).then((events) => {
-//     res.send(events);
-//   });
-// });
+//localhost:3001/eventlistings/picnic2021
+server.get("/eventlistings/:event", (req, res) => {
+  scraper.everson.getEvent(req.params.event).then((events) => {
+    res.send(events);
+  });
+});
 
 server.get(`/restaurants`, async (req, res) => {
   res.send({ restaurants: await Restaurant.findAll() });
