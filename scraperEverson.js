@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const cron = require("node-cron");
 const chrono = require("chrono-node");
-var dateFormat = require("dateformat");
+const dateFormat = require("dateformat");
 
 const { db } = require("./models/db");
 const allEventsUrl = "https://everson.org/events-list/events-category-events/";
