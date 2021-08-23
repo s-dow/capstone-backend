@@ -2,24 +2,26 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 const cron = require("node-cron");
 const chrono = require("chrono-node");
-var dateFormat = require("dateformat");
+const dateFormat = require("dateformat");
 
 const { db } = require("./models/db");
-const allEventsUrl = "https://everson.org/events-list/events-category-events/";
+const allEventsUrl = "https://www.mccarthymercantile.com/events-we-present";
 const oneEventUrl = "https://everson.org/connect/";
 
 cron.schedule("* * */1 * *", async () => {
+  console.log("run");
   const response = await fetch(`${allEventsUrl}`);
   const body = await response.text();
   const $ = cheerio.load(body);
 
   const events = [];
 
-  $(`.post_text_inner`).each((index, ele) => {
+  $(`.eventlist-column-info`).each((index, ele) => {
     const element = $(ele);
-    const title = element.find(".entry_title");
-    const date = element.find(".archivedate");
-    const description = element.find(".post_excerpt");
+    const title = element.find(".eventlist-title");
+    const date = element.find(".event-date");
+    // const time = element.find(".event-time-localized");
+    const description = element.find(".eventlist-excerpt");
     const event = {
       title: title.text(),
       date: dateFormat(
@@ -28,6 +30,7 @@ cron.schedule("* * */1 * *", async () => {
       ),
       description: description.text(),
     };
+
     events.push(event);
   });
 
