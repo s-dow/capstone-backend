@@ -1,10 +1,9 @@
 const server = require("express")();
 server.use(require("body-parser").json());
 server.use(require("cors")());
-const scraper = require("./scraper");
 const sequelize = require("sequelize");
 
-const { db, Event, User, Restaurant } = require("./models/db");
+const { db, Event, User, Restaurant, Music } = require("./models/db");
 const Op = require("sequelize").Op;
 
 let port = process.env.PORT;
@@ -20,10 +19,19 @@ server.get("/events", async (req, res) => {
   });
 });
 
-//localhost:3001/eventlistings/picnic2021
-server.get("/eventlistings/:event", (req, res) => {
-  scraper.everson.getEvent(req.params.event).then((events) => {
-    res.send(events);
+server.get("/livemusic", async (req, res) => {
+  res.send({
+    music: await Music.findAll({
+      order: [sequelize.literal(`date >= CURRENT_DATE DESC, date`)],
+    }),
+  });
+});
+
+server.get("/events/:id", async (req, res) => {
+  res.send({
+    events: await Event.findOne({
+      where: { eventID: req.params.id },
+    }),
   });
 });
 

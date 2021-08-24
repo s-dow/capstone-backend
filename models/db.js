@@ -32,6 +32,7 @@ if (!dbURL) {
 const Event = require("./Event")(db);
 const User = require("./User")(db);
 const Restaurant = require("./Restaurant")(db);
+const Music = require("./Music")(db);
 
 const connectToDB = async () => {
   await db.authenticate();
@@ -41,4 +42,4 @@ const connectToDB = async () => {
 };
 
 connectToDB();
-module.exports = { db, Event, User, Restaurant };
+module.exports = { db, Event, User, Restaurant, Music };

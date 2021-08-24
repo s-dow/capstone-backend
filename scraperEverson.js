@@ -21,6 +21,12 @@ cron.schedule("* * */1 * *", async () => {
     const date = element.find(".archivedate");
     const description = element.find(".post_excerpt");
     const event = {
+      // business: "Everson Museum",
+      address1: "401 Harrison Street",
+      city: "Syracuse",
+      state: "NY",
+      zipCode: "13202",
+      // tag: "museum",
       title: title.text(),
       date: dateFormat(
         chrono.parseDate(date.text().replace(/\n/g, " ")),
