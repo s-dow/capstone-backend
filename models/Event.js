@@ -22,8 +22,8 @@ module.exports = (db) => {
       city: DT.STRING,
       state: DT.STRING,
       zipCode: DT.STRING,
-      // business: DT.STRING,
-      // tag: DT.STRING,
+      business: DT.STRING,
+      tag: DT.STRING,
     },
     {
       timestamps: false,

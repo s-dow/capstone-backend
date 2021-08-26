@@ -21,12 +21,11 @@ cron.schedule("* * */1 * *", async () => {
     const date = element.find(".archivedate");
     const description = element.find(".post_excerpt");
     const event = {
-      // business: "Everson Museum",
+      business: "Everson Museum of Art",
       address1: "401 Harrison Street",
       city: "Syracuse",
       state: "NY",
-      zipCode: "13202",
-      // tag: "museum",
+      tag: "museum",
       title: title.text(),
       date: dateFormat(
         chrono.parseDate(date.text().replace(/\n/g, " ")),
@@ -39,8 +38,8 @@ cron.schedule("* * */1 * *", async () => {
 
   events.map((event) => {
     db.query(`INSERT INTO events
-        (title, date, description)
-        VALUES ('${event.title}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
+        (title, business, tag, address1, city, state, date, description)
+        VALUES ('${event.title}', '${event.business}','${event.tag}','${event.address1}', '${event.city}', '${event.state}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
   });
 });
 

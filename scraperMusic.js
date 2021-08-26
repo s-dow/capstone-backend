@@ -8,7 +8,7 @@ const { db } = require("./models/db");
 const allMusicUrl =
   "https://concerts50.com/upcoming-concerts-in-new-york/syracuse";
 
-cron.schedule("* * */1 * *", async () => {
+cron.schedule("* */23 * * *", async () => {
   const response = await fetch(`${allMusicUrl}`);
   const body = await response.text();
   const $ = cheerio.load(body);

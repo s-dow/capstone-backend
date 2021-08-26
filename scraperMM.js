@@ -8,7 +8,7 @@ const { db } = require("./models/db");
 const allEventsUrl = "https://www.mccarthymercantile.com/events-we-present";
 const oneEventUrl = "https://everson.org/connect/";
 
-cron.schedule("* */23 * * *", async () => {
+cron.schedule("* * */1 * *", async () => {
   const response = await fetch(`${allEventsUrl}`);
   const body = await response.text();
   const $ = cheerio.load(body);
@@ -20,13 +20,15 @@ cron.schedule("* */23 * * *", async () => {
     const title = element.find(".eventlist-title");
     const date = element.find(".event-date");
     // const time = element.find(".event-time-localized");
-    const description = element.find(".eventlist-excerpt");
+    const description = element.find(".eventlist-excerpt").replace(`'`, `''`);
     const event = {
       title: title.text(),
       date: dateFormat(
         chrono.parseDate(date.text().replace(/\n/g, " ")),
         "isoDateTime"
       ),
+      tag: "mccarthy",
+      business: "McCarthy Mercantile",
       description: description.text(),
     };
 
@@ -35,8 +37,8 @@ cron.schedule("* */23 * * *", async () => {
 
   events.map((event) => {
     db.query(`INSERT INTO events
-        (title, date, description)
-        VALUES ('${event.title}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
+        (tag, business, title, date, description)
+        VALUES ('${event.tag}', '${event.business}', '${event.title}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
   });
 });
 
