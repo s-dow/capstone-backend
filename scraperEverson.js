@@ -39,7 +39,7 @@ cron.schedule("*/1 * * * *", async () => {
   events.map((event) => {
     db.query(`INSERT INTO events
         (title, business, tag, address1, city, state, date, description)
-        VALUES ('${event.title}', '${event.business}','${event.tag}','${event.address1}', '${event.city}', '${event.state}', '${event.date}', '${event.description}')`);
+        VALUES ('${event.title}', '${event.business}','${event.tag}','${event.address1}', '${event.city}', '${event.state}', '${event.date}', '${event.description}') ON CONFLICT (title) DO NOTHING`);
   });
 });
 
