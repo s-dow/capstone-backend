@@ -8,7 +8,7 @@ const { db } = require("./models/db");
 const allEventsUrl = "https://everson.org/events-list/events-category-events/";
 const oneEventUrl = "https://everson.org/connect/";
 
-cron.schedule("* * */1 * *", async () => {
+cron.schedule("*/1 * * * *", async () => {
   const response = await fetch(`${allEventsUrl}`);
   const body = await response.text();
   const $ = cheerio.load(body);
